@@ -215,5 +215,13 @@ def appeal():
         "status": "under_review"
     })
 
+@app.route("/", methods=["GET"])
+def index():
+    return jsonify({
+        "name": "Provenance Guard",
+        "description": "AI content attribution API for creative platforms",
+        "endpoints": ["/submit", "/appeal", "/log"]
+    })
+
 if __name__ == "__main__":
     app.run(debug=True)

@@ -152,5 +152,27 @@
     "stylometric_score": 0.5,
     "status": "classified",
     "appeal_reasoning": null
+  },
+  {
+    "content_id": "a77aa4e3-86c0-424b-94d1-f6d22037faae",
+    "creator_id": "test-borderline-1",
+    "timestamp": "2026-07-01T03:06:55.344693+00:00",
+    "attribution": "likely_ai",
+    "confidence": 0.861,
+    "llm_score": 1.0,
+    "stylometric_score": 0.653,
+    "status": "classified",
+    "appeal_reasoning": null
+  },
+  {
+    "content_id": "8841f113-04c7-445a-a802-d896c788dc0f",
+    "creator_id": "test-borderline-2",
+    "timestamp": "2026-07-01T03:07:03.127724+00:00",
+    "attribution": "likely_human",
+    "confidence": 0.328,
+    "llm_score": 0.2,
+    "stylometric_score": 0.519,
+    "status": "classified",
+    "appeal_reasoning": null
   }
 ]
