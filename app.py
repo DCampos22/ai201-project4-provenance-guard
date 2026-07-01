@@ -69,6 +69,48 @@ Post:
         return max(0.0, min(1.0, score))
     except ValueError:
         return 0.5
+    
+# ── Signal 2: Stylometric Heuristics ─────────────────────────────────────────
+
+import re
+import math
+
+def stylometric_signal(text: str) -> float:
+    sentences = [s.strip() for s in re.split(r'[.!?]+', text) if s.strip()]
+    words = text.lower().split()
+
+    if len(words) < 10 or len(sentences) < 2:
+        return 0.5  # not enough text to analyze reliably
+
+    # Metric 1: sentence length variance
+    # AI text = uniform sentence lengths, human = more variable
+    lengths = [len(s.split()) for s in sentences]
+    mean_len = sum(lengths) / len(lengths)
+    variance = sum((l - mean_len) ** 2 for l in lengths) / len(lengths)
+    std_dev = math.sqrt(variance)
+    # Low std_dev = uniform = more AI-like
+    # Normalize: std_dev of 0 → 1.0 (AI), std_dev of 8+ → 0.0 (human)
+    variance_score = max(0.0, 1.0 - (std_dev / 8.0))
+
+    # Metric 2: type-token ratio (vocabulary diversity)
+    # AI text reuses words predictably, human writing is more diverse
+    unique_words = set(words)
+    ttr = len(unique_words) / len(words)
+    # High TTR = diverse = more human-like
+    # Normalize: TTR of 1.0 → 0.0 (human), TTR of 0.5 → 1.0 (AI)
+    ttr_score = max(0.0, min(1.0, (1.0 - ttr) * 2))
+
+    # Metric 3: punctuation density
+    # Human fan posts use !, ?, ... emotionally
+    emotional_punct = len(re.findall(r'[!?]|\.\.\.', text))
+    punct_ratio = emotional_punct / max(len(sentences), 1)
+    # High emotional punctuation = more human
+    # Normalize: ratio of 2+ → 0.0 (human), ratio of 0 → 1.0 (AI)
+    punct_score = max(0.0, 1.0 - (punct_ratio / 2.0))
+
+    # Combine three metrics equally
+    stylometric_score = (variance_score + ttr_score + punct_score) / 3.0
+    return round(stylometric_score, 3)
 
 
 # ── Routes ────────────────────────────────────────────────────────────────────
@@ -88,9 +130,10 @@ def submit():
 
     content_id = str(uuid.uuid4())
     llm_score = llm_signal(text)
+    stylo_score = stylometric_signal(text)
 
-    # Placeholder confidence and label until Signal 2 is added in Milestone 4
-    confidence = llm_score
+    # Weighted combination per planning.md
+    confidence = round((0.6 * llm_score) + (0.4 * stylo_score), 3)
     attribution = "likely_ai" if confidence >= 0.66 else "uncertain" if confidence >= 0.41 else "likely_human"
     label = get_label(confidence)
 
@@ -101,7 +144,7 @@ def submit():
         "attribution": attribution,
         "confidence": round(confidence, 3),
         "llm_score": round(llm_score, 3),
-        "stylometric_score": None,
+        "stylometric_score": round(stylo_score, 3),
         "status": "classified",
         "appeal_reasoning": None,
     }
@@ -110,10 +153,10 @@ def submit():
     return jsonify({
         "content_id": content_id,
         "attribution": attribution,
-        "confidence": round(confidence, 3),
+        "confidence": confidence,
         "label": label,
         "llm_score": round(llm_score, 3),
-        "stylometric_score": None,
+        "stylometric_score": round(stylo_score, 3),
     })
 
 

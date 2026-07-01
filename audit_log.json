@@ -20,5 +20,27 @@
     "stylometric_score": null,
     "status": "classified",
     "appeal_reasoning": null
+  },
+  {
+    "content_id": "1223ca8e-0761-46b0-8f54-72c4bd39ee5c",
+    "creator_id": "test-user-1",
+    "timestamp": "2026-07-01T02:47:08.650027+00:00",
+    "attribution": "likely_human",
+    "confidence": 0.192,
+    "llm_score": 0.0,
+    "stylometric_score": 0.479,
+    "status": "classified",
+    "appeal_reasoning": null
+  },
+  {
+    "content_id": "ec2f68dd-62aa-4518-86e9-9aa246deb158",
+    "creator_id": "test-user-2",
+    "timestamp": "2026-07-01T02:47:29.344716+00:00",
+    "attribution": "likely_ai",
+    "confidence": 0.79,
+    "llm_score": 0.9,
+    "stylometric_score": 0.625,
+    "status": "classified",
+    "appeal_reasoning": null
   }
 ]
