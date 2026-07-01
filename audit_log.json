@@ -7,8 +7,8 @@
     "confidence": 0.0,
     "llm_score": 0.0,
     "stylometric_score": null,
-    "status": "classified",
-    "appeal_reasoning": null
+    "status": "under_review",
+    "appeal_reasoning": "I wrote this myself from personal experience as a Love Island superfan. My writing style is naturally informal and emotional."
   },
   {
     "content_id": "ca241814-8e48-4f5b-a45d-d8ee05028644",
@@ -40,6 +40,116 @@
     "confidence": 0.79,
     "llm_score": 0.9,
     "stylometric_score": 0.625,
+    "status": "classified",
+    "appeal_reasoning": null
+  },
+  {
+    "content_id": "73e416c2-1d24-4577-a603-b0bfb8cbcd53",
+    "creator_id": "ratelimit-test",
+    "timestamp": "2026-07-01T03:02:48.776771+00:00",
+    "attribution": "likely_human",
+    "confidence": 0.32,
+    "llm_score": 0.2,
+    "stylometric_score": 0.5,
+    "status": "classified",
+    "appeal_reasoning": null
+  },
+  {
+    "content_id": "14dcb619-e7cf-4d19-bf67-5f82a3f5a288",
+    "creator_id": "ratelimit-test",
+    "timestamp": "2026-07-01T03:02:49.171174+00:00",
+    "attribution": "likely_human",
+    "confidence": 0.2,
+    "llm_score": 0.0,
+    "stylometric_score": 0.5,
+    "status": "classified",
+    "appeal_reasoning": null
+  },
+  {
+    "content_id": "85ba10ac-d63f-4b4d-9f69-719c0e53ed53",
+    "creator_id": "ratelimit-test",
+    "timestamp": "2026-07-01T03:02:49.477637+00:00",
+    "attribution": "likely_human",
+    "confidence": 0.32,
+    "llm_score": 0.2,
+    "stylometric_score": 0.5,
+    "status": "classified",
+    "appeal_reasoning": null
+  },
+  {
+    "content_id": "8fffabc9-a607-4479-a204-c8b4f4989725",
+    "creator_id": "ratelimit-test",
+    "timestamp": "2026-07-01T03:02:49.787181+00:00",
+    "attribution": "likely_human",
+    "confidence": 0.2,
+    "llm_score": 0.0,
+    "stylometric_score": 0.5,
+    "status": "classified",
+    "appeal_reasoning": null
+  },
+  {
+    "content_id": "8acfd5f3-25c8-41ef-a66f-d5135ed6ee6b",
+    "creator_id": "ratelimit-test",
+    "timestamp": "2026-07-01T03:02:50.197110+00:00",
+    "attribution": "likely_human",
+    "confidence": 0.2,
+    "llm_score": 0.0,
+    "stylometric_score": 0.5,
+    "status": "classified",
+    "appeal_reasoning": null
+  },
+  {
+    "content_id": "f8497cac-4cac-4d22-ac03-e56005d7155f",
+    "creator_id": "ratelimit-test",
+    "timestamp": "2026-07-01T03:02:50.453557+00:00",
+    "attribution": "likely_human",
+    "confidence": 0.2,
+    "llm_score": 0.0,
+    "stylometric_score": 0.5,
+    "status": "classified",
+    "appeal_reasoning": null
+  },
+  {
+    "content_id": "929a7038-d409-4afc-8ade-3ad7ec053df1",
+    "creator_id": "ratelimit-test",
+    "timestamp": "2026-07-01T03:02:50.686063+00:00",
+    "attribution": "likely_human",
+    "confidence": 0.32,
+    "llm_score": 0.2,
+    "stylometric_score": 0.5,
+    "status": "classified",
+    "appeal_reasoning": null
+  },
+  {
+    "content_id": "ceca5d30-56b2-478f-86ae-6e8f20051683",
+    "creator_id": "ratelimit-test",
+    "timestamp": "2026-07-01T03:02:51.083561+00:00",
+    "attribution": "likely_human",
+    "confidence": 0.32,
+    "llm_score": 0.2,
+    "stylometric_score": 0.5,
+    "status": "classified",
+    "appeal_reasoning": null
+  },
+  {
+    "content_id": "0cc38797-d7ea-4ff8-9810-bf667662faef",
+    "creator_id": "ratelimit-test",
+    "timestamp": "2026-07-01T03:02:51.528333+00:00",
+    "attribution": "likely_human",
+    "confidence": 0.32,
+    "llm_score": 0.2,
+    "stylometric_score": 0.5,
+    "status": "classified",
+    "appeal_reasoning": null
+  },
+  {
+    "content_id": "18ba6d54-4c3d-46c3-ad64-03606195c208",
+    "creator_id": "ratelimit-test",
+    "timestamp": "2026-07-01T03:02:51.834540+00:00",
+    "attribution": "likely_human",
+    "confidence": 0.2,
+    "llm_score": 0.0,
+    "stylometric_score": 0.5,
     "status": "classified",
     "appeal_reasoning": null
   }

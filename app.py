@@ -185,6 +185,35 @@ def get_label(confidence: float) -> str:
             "the slang, the passion. Verified fan energy."
         )
 
+@app.route("/appeal", methods=["POST"])
+def appeal():
+    data = request.get_json()
+    if not data or "content_id" not in data or "creator_reasoning" not in data:
+        return jsonify({"error": "Missing required fields: content_id, creator_reasoning"}), 400
+
+    content_id = data["content_id"]
+    reasoning = data["creator_reasoning"]
+
+    logs = read_log()
+    found = False
+    for entry in logs:
+        if entry["content_id"] == content_id:
+            entry["status"] = "under_review"
+            entry["appeal_reasoning"] = reasoning
+            found = True
+            break
+
+    if not found:
+        return jsonify({"error": "content_id not found"}), 404
+
+    with open(LOG_FILE, "w") as f:
+        json.dump(logs, f, indent=2)
+
+    return jsonify({
+        "message": "Your appeal has been received and is under review.",
+        "content_id": content_id,
+        "status": "under_review"
+    })
 
 if __name__ == "__main__":
     app.run(debug=True)
