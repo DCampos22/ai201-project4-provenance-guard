@@ -18,8 +18,8 @@
     "confidence": 0.9,
     "llm_score": 0.9,
     "stylometric_score": null,
-    "status": "classified",
-    "appeal_reasoning": null
+    "status": "under_review",
+    "appeal_reasoning": "I wrote this myself. I am a non-native English speaker and my writing style is more formal than typical."
   },
   {
     "content_id": "1223ca8e-0761-46b0-8f54-72c4bd39ee5c",
@@ -172,6 +172,39 @@
     "confidence": 0.328,
     "llm_score": 0.2,
     "stylometric_score": 0.519,
+    "status": "classified",
+    "appeal_reasoning": null
+  },
+  {
+    "content_id": "911cacf2-1fcf-489c-9d2c-a98890229c9e",
+    "creator_id": "test-user-1",
+    "timestamp": "2026-07-01T03:26:58.386262+00:00",
+    "attribution": "likely_human",
+    "confidence": 0.192,
+    "llm_score": 0.0,
+    "stylometric_score": 0.479,
+    "status": "classified",
+    "appeal_reasoning": null
+  },
+  {
+    "content_id": "d72b840e-456b-4837-b276-a43a1eb8e254",
+    "creator_id": "test-user-2",
+    "timestamp": "2026-07-01T03:27:35.923097+00:00",
+    "attribution": "likely_ai",
+    "confidence": 0.79,
+    "llm_score": 0.9,
+    "stylometric_score": 0.625,
+    "status": "classified",
+    "appeal_reasoning": null
+  },
+  {
+    "content_id": "65744d10-1e7e-4190-95f5-3423f1c22a8e",
+    "creator_id": "mega-fan",
+    "timestamp": "2026-07-01T03:49:15.824293+00:00",
+    "attribution": "likely_human",
+    "confidence": 0.183,
+    "llm_score": 0.0,
+    "stylometric_score": 0.458,
     "status": "classified",
     "appeal_reasoning": null
   }

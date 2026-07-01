@@ -3,7 +3,7 @@ import uuid
 import json
 from datetime import datetime, timezone
 from dotenv import load_dotenv
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 from groq import Groq
@@ -222,6 +222,10 @@ def index():
         "description": "AI content attribution API for creative platforms",
         "endpoints": ["/submit", "/appeal", "/log"]
     })
+
+@app.route("/ui")
+def ui():
+    return render_template("index.html")
 
 if __name__ == "__main__":
     app.run(debug=True)

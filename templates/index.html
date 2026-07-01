@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Provenance Guard 🛡️</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #ff6b9d 0%, #ff8c42 50%, #ffd700 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: white;
+            font-size: 2.2rem;
+            margin-bottom: 8px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .subtitle {
+            text-align: center;
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 32px;
+            font-size: 1rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+            margin-bottom: 24px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-family: inherit;
+            resize: vertical;
+            min-height: 120px;
+            transition: border-color 0.2s;
+            color: #333;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #ff6b9d;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 12px 14px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-family: inherit;
+            margin-bottom: 20px;
+            transition: border-color 0.2s;
+            color: #333;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #ff6b9d;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #ff6b9d, #ff8c42);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.2s, transform 0.1s;
+        }
+
+        button:hover { opacity: 0.9; transform: translateY(-1px); }
+        button:active { transform: translateY(0); }
+        button:disabled { opacity: 0.6; cursor: not-allowed; }
+
+        .result {
+            display: none;
+            margin-top: 24px;
+        }
+
+        .label-box {
+            padding: 20px;
+            border-radius: 12px;
+            font-size: 1.05rem;
+            font-weight: 500;
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+
+        .label-ai { background: #fff3cd; border-left: 4px solid #ffc107; color: #856404; }
+        .label-human { background: #d1f2eb; border-left: 4px solid #27ae60; color: #1a5e3a; }
+        .label-uncertain { background: #e8f4fd; border-left: 4px solid #3498db; color: #1a4a6e; }
+
+        .scores {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .score-box {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 14px;
+            text-align: center;
+        }
+
+        .score-value {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #ff6b9d;
+        }
+
+        .score-label {
+            font-size: 0.75rem;
+            color: #888;
+            margin-top: 4px;
+        }
+
+        .content-id {
+            font-size: 0.8rem;
+            color: #aaa;
+            text-align: center;
+            margin-top: 8px;
+            word-break: break-all;
+        }
+
+        .appeal-section {
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 2px dashed #e0e0e0;
+        }
+
+        .appeal-section h3 {
+            font-size: 1rem;
+            color: #555;
+            margin-bottom: 12px;
+        }
+
+        .appeal-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            margin-top: 10px;
+        }
+
+        .appeal-result {
+            display: none;
+            margin-top: 12px;
+            padding: 12px;
+            background: #f0f0ff;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            color: #444;
+        }
+
+        .loading {
+            text-align: center;
+            color: #888;
+            padding: 20px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Provenance Guard 🛡️</h1>
+        <p class="subtitle">Is this post from a real Islander fan or AI? Let's find out.</p>
+
+        <div class="card">
+            <label for="creator">Your username</label>
+            <input type="text" id="creator" placeholder="e.g. islandfan99" value="fan-user" />
+
+            <label for="text">Paste your post</label>
+            <textarea id="text" placeholder="e.g. omg did you SEE what happened at the fire pit last night?? i literally cannot believe he said that to her 😭"></textarea>
+
+            <button onclick="submitPost()" id="submitBtn" style="margin-top: 16px;">
+                Analyse Post ✨
+            </button>
+
+            <div class="loading" id="loading">Analysing your post... 🔍</div>
+
+            <div class="result" id="result">
+                <div class="label-box" id="labelBox"></div>
+
+                <div class="scores">
+                    <div class="score-box">
+                        <div class="score-value" id="confidence">—</div>
+                        <div class="score-label">Confidence</div>
+                    </div>
+                    <div class="score-box">
+                        <div class="score-value" id="llmScore">—</div>
+                        <div class="score-label">LLM Signal</div>
+                    </div>
+                    <div class="score-box">
+                        <div class="score-value" id="styloScore">—</div>
+                        <div class="score-label">Stylometric</div>
+                    </div>
+                </div>
+
+                <div class="content-id" id="contentId"></div>
+
+                <div class="appeal-section">
+                    <h3>Think this is wrong? Submit an appeal.</h3>
+                    <textarea id="appealReason" placeholder="Explain why you believe this classification is incorrect..." style="min-height: 80px;"></textarea>
+                    <button class="appeal-btn" onclick="submitAppeal()">Submit Appeal 📩</button>
+                    <div class="appeal-result" id="appealResult"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentContentId = null;
+
+        async function submitPost() {
+            const text = document.getElementById('text').value.trim();
+            const creator = document.getElementById('creator').value.trim();
+
+            if (!text) { alert('Please enter some text!'); return; }
+
+            document.getElementById('submitBtn').disabled = true;
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('result').style.display = 'none';
+
+            try {
+                const res = await fetch('/submit', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ text, creator_id: creator || 'anonymous' })
+                });
+                const data = await res.json();
+
+                currentContentId = data.content_id;
+
+                const labelBox = document.getElementById('labelBox');
+                labelBox.textContent = data.label;
+                labelBox.className = 'label-box';
+                if (data.attribution === 'likely_ai') labelBox.classList.add('label-ai');
+                else if (data.attribution === 'likely_human') labelBox.classList.add('label-human');
+                else labelBox.classList.add('label-uncertain');
+
+                document.getElementById('confidence').textContent = data.confidence;
+                document.getElementById('llmScore').textContent = data.llm_score;
+                document.getElementById('styloScore').textContent = data.stylometric_score ?? '—';
+                document.getElementById('contentId').textContent = 'ID: ' + data.content_id;
+
+                document.getElementById('result').style.display = 'block';
+                document.getElementById('appealResult').style.display = 'none';
+                document.getElementById('appealReason').value = '';
+
+            } catch (err) {
+                alert('Something went wrong. Is the Flask server running?');
+            } finally {
+                document.getElementById('submitBtn').disabled = false;
+                document.getElementById('loading').style.display = 'none';
+            }
+        }
+
+        async function submitAppeal() {
+            const reasoning = document.getElementById('appealReason').value.trim();
+            if (!reasoning) { alert('Please explain your reasoning!'); return; }
+            if (!currentContentId) { alert('Submit a post first!'); return; }
+
+            try {
+                const res = await fetch('/appeal', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        content_id: currentContentId,
+                        creator_reasoning: reasoning
+                    })
+                });
+                const data = await res.json();
+                const appealResult = document.getElementById('appealResult');
+                appealResult.textContent = '✅ ' + data.message;
+                appealResult.style.display = 'block';
+            } catch (err) {
+                alert('Appeal failed. Is the Flask server running?');
+            }
+        }
+    </script>
+</body>
+</html>
